@@ -27,9 +27,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Sidebar>{children}</Sidebar>
-          <div className="absolute top-0 right-0 ">
-            <ModeToggle />
-          </div>
         </ThemeProvider>
       </body>
     </html>
