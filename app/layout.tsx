@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
+import SupabaseProvider from "@/providers/SupabaseProvider";
 const font = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,7 +27,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Sidebar>{children}</Sidebar>
+          <SupabaseProvider>
+            <Sidebar>{children}</Sidebar>
+          </SupabaseProvider>
         </ThemeProvider>
       </body>
     </html>
