@@ -8,7 +8,9 @@ import { ModeToggle } from "@/components/ModeToggle";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import { User } from "lucide-react";
 import UserProvider from "@/providers/UserProvider";
+import ModalProvider from "@/providers/ModalProvider";
 const font = Figtree({ subsets: ["latin"] });
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Spotify Clone",
@@ -29,8 +31,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster />
           <SupabaseProvider>
             <UserProvider>
+              <ModalProvider />
               <Sidebar>{children}</Sidebar>
             </UserProvider>
           </SupabaseProvider>
