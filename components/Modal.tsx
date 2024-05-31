@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
     <Dialog open={isOpen} defaultOpen={isOpen} onOpenChange={onChange}>
       <DialogOverlay className="bg-neutral-900/90 backdrop-blur-sm fixed inset-0" />
 
-      <DialogContent className="bg-gradient-to-r from-emerald-800">
+      <DialogContent className="">
         <DialogHeader>
           <DialogTitle className="text-center">{title}</DialogTitle>
           <DialogDescription className="text-center">

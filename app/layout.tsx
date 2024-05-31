@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
 import SupabaseProvider from "@/providers/SupabaseProvider";
-import { User } from "lucide-react";
+
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 const font = Figtree({ subsets: ["latin"] });

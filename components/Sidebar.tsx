@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
+import { TbMusicCode } from "react-icons/tb";
+
 import { useMemo } from "react";
 import Box from "@/components/Box";
 import SidebarItem from "./SidebarItem";
@@ -26,6 +28,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         label: "Search",
         active: pathname === "/search",
         href: "/search",
+      },
+      {
+        icon: TbMusicCode,
+        label: "Code",
+        active: pathname === "/code",
+        href: "/code",
       },
     ],
     [pathname]

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useUploadModal from "@/hooks/useUploadModal";
 import Modal from "./Modal";
 
-import { z } from "zod";
+import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -21,18 +21,27 @@ import { Input } from "@/components/ui/input";
 import Btn from "@/components/Btn";
 import { toast } from "./ui/use-toast";
 import { useUser } from "@/hooks/useUser";
+import uniqid from "uniqid";
+import { supabase } from "./AuthModal";
+import { title } from "process";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   author: z.string().min(2).max(50),
   title: z.string().min(2).max(50),
-  song: z.string().url(),
-  image: z.string().url(),
+  song: z.custom((value) => value instanceof File, {
+    message: "Invalid song file",
+  }),
+  image: z.custom((value) => value instanceof File, {
+    message: "Invalid image file",
+  }),
 });
 
 const UploadModal = () => {
+  const { user } = useUser();
+  const router = useRouter();
   const uploadModal = useUploadModal();
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useUser();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,18 +49,79 @@ const UploadModal = () => {
     defaultValues: {
       author: "",
       title: "",
-      song: "",
-      image: "",
+      song: null,
+      image: null,
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      console.log(user);
       setIsLoading(true);
-      // 3. Submit your form.
-      //   console.log(values);
-      //   setIsLoading(false);
+      const imageFile = values.image?.[0];
+      const songFile = values.song?.[0];
+      if (!imageFile || !songFile || !user) {
+        throw new Error("Missing fields");
+        return;
+      }
+
+      const uniqueID = uniqid();
+      const { data: songData, error: songError } = await supabase.storage
+        .from("songs")
+        .upload(`song-${values.title}-${uniqueID}`, songFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (songError) {
+        setIsLoading(false);
+        return toast({
+          title: "Error",
+          description: "songs Something went wrong",
+        });
+      }
+      // Upload image
+      const { data: imageData, error: imageError } = await supabase.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (imageError) {
+        setIsLoading(false);
+        return toast({
+          title: "Error",
+          description: "image Something went wrong",
+        });
+      }
+
+      const { error: supabaseError } = await supabase.from("songs").insert({
+        user_id: user.id,
+        title: values.title,
+        author: values.author,
+        image_path: imageData.path,
+        song_path: songData.path,
+      });
+
+      if (supabaseError) {
+        setIsLoading(false);
+        return toast({
+          title: "Error",
+          description: "supabaseError Something went wrong",
+        });
+      }
+
+      router.refresh();
+      setIsLoading(false);
+      toast({
+        title: "Success",
+        description: "Song uploaded",
+      });
+
+      form.reset();
+      uploadModal.onClose();
     } catch (error) {
       toast({
         title: "Error",
@@ -59,8 +129,6 @@ const UploadModal = () => {
       });
     } finally {
       setIsLoading(false);
-      //   form.reset();
-      //   uploadModal.onClose();
     }
   }
 

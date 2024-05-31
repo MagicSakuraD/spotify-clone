@@ -2,7 +2,8 @@
 
 import React from "react";
 import Modal from "./Modal";
-import { createClient } from "@supabase/supabase-js";
+// import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/client";
 import { Auth } from "@supabase/auth-ui-react";
 import { useRouter } from "next/navigation";
 import {
@@ -20,10 +21,7 @@ if (
   throw new Error("Missing required environment variables");
 }
 
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+export const supabase = createClient();
 
 const AuthModal = () => {
   const router = useRouter();
