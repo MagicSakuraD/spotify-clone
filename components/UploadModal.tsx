@@ -29,12 +29,8 @@ import { useRouter } from "next/navigation";
 const formSchema = z.object({
   author: z.string().min(2).max(50),
   title: z.string().min(2).max(50),
-  song: z.custom((value) => value instanceof File, {
-    message: "Invalid song file",
-  }),
-  image: z.custom((value) => value instanceof File, {
-    message: "Invalid image file",
-  }),
+  song: z.instanceof(File, { message: "Invalid song file" }),
+  image: z.instanceof(File, { message: "Invalid image file" }),
 });
 
 const UploadModal = () => {
@@ -49,18 +45,17 @@ const UploadModal = () => {
     defaultValues: {
       author: "",
       title: "",
-      song: null,
-      image: null,
+      song: undefined,
+      image: undefined,
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(user);
       setIsLoading(true);
-      const imageFile = values.image?.[0];
-      const songFile = values.song?.[0];
+      const imageFile = values.image;
+      const songFile = values.song;
       if (!imageFile || !songFile || !user) {
         throw new Error("Missing fields");
         return;
@@ -192,7 +187,9 @@ const UploadModal = () => {
                   <Input
                     type="file"
                     placeholder=""
-                    {...field}
+                    onChange={(e) =>
+                      field.onChange(e.target.files && e.target.files[0])
+                    }
                     disabled={isLoading}
                     accept=".mp3"
                   />
@@ -212,7 +209,9 @@ const UploadModal = () => {
                   <Input
                     type="file"
                     placeholder=""
-                    {...field}
+                    onChange={(e) =>
+                      field.onChange(e.target.files && e.target.files[0])
+                    }
                     disabled={isLoading}
                     accept="image/*"
                   />
