@@ -19,3 +19,5 @@ const PageContent: React.FC<PageContentProps> = ({ songs }) => {
     </div>
   );
 };
+
+export default PageContent;
