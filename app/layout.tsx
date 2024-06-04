@@ -12,6 +12,7 @@ import ModalProvider from "@/providers/ModalProvider";
 const font = Figtree({ subsets: ["latin"] });
 import { Toaster } from "@/components/ui/toaster";
 import getSongsByUserId from "@/actions/getSongsByUserId";
+import Player from "@/components/Player";
 
 export const metadata: Metadata = {
   title: "Spotify Clone",
@@ -40,6 +41,7 @@ export default async function RootLayout({
             <UserProvider>
               <ModalProvider />
               <Sidebar songs={userSongs}>{children}</Sidebar>
+              <Player />
             </UserProvider>
           </SupabaseProvider>
         </ThemeProvider>
