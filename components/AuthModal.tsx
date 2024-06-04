@@ -12,29 +12,30 @@ import {
 } from "@supabase/auth-ui-shared";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useEffect } from "react";
-import { useSessionContext } from "@supabase/auth-helpers-react";
-
-if (
-  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-) {
-  throw new Error("Missing required environment variables");
-}
 
 export const supabase = createClient();
 
 const AuthModal = () => {
   const router = useRouter();
-  const { session } = useSessionContext();
 
   const { onClose, isOpen } = useAuthModal();
 
   useEffect(() => {
-    if (session) {
-      router.refresh();
-      onClose();
-    }
-  }, [session, router, onClose]);
+    const checkUser = async () => {
+      // 使用 supabase.auth.getUser() 获取用户信息
+      const { data: user, error } = await supabase.auth.getUser();
+
+      if (error) {
+        console.error("获取用户信息出错:", error);
+      } else if (user) {
+        // 用户已登录，进行路由跳转和模态框关闭
+        router.refresh();
+        onClose();
+      }
+    };
+
+    checkUser();
+  }, [router, onClose]);
 
   const onChange = (open: boolean) => {
     if (!open) {
