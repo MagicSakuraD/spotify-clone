@@ -1,5 +1,5 @@
 import { Song } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
@@ -58,6 +58,30 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     format: ["mp3"],
   });
 
+  useEffect(() => {
+    sound?.play();
+
+    return () => {
+      sound?.unload();
+    };
+  }, [sound]);
+
+  const handlePlay = () => {
+    if (!isPlaying) {
+      play();
+    } else {
+      pause();
+    }
+  };
+
+  const toggleMute = () => {
+    if (volume === 0) {
+      setVolume(1);
+    } else {
+      setVolume(0);
+    }
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 h-full">
       <div className="flex w-full justify-start">
@@ -83,7 +107,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
           size={30}
         />
         <div
-          onClick={() => {}}
+          onClick={handlePlay}
           className="flex items-center justify-center h-10 w-10 rounded-full bg-white p-1 cursor-pointer"
         >
           <Icon className="text-black" size={30} />
@@ -96,8 +120,19 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
       </div>
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
-          <VolumeIcon className="cursor-pointer" size={20} onClick={() => {}} />
-          <Slider defaultValue={[1]} max={1} step={0.1} aria-label="Volume" />
+          <VolumeIcon
+            className="cursor-pointer"
+            size={20}
+            onClick={toggleMute}
+          />
+          <Slider
+            defaultValue={[1]}
+            max={1}
+            step={0.1}
+            aria-label="Volume"
+            value={[volume]} // 修复：传递一个数组
+            onValueChange={(value) => setVolume(value[0])} // 修复：使用数组的第一个元素 // Fix: Pass the first element of the value array to setVolume
+          />
         </div>
       </div>
     </div>
