@@ -24,8 +24,8 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
         <Image
           className="object-cover"
           src={imagePath || "/images/liked.png"}
-          layout="fill"
           alt="Image"
+          fill={true}
         />
       </div>
       <div className="flex flex-col items-start w-full p-4 gap-y-1">
