@@ -42,29 +42,44 @@ export const MyUserContextProvider = (props: Props) => {
       .in("status", ["trialing", "active"])
       .single();
 
+  // useEffect(() => {
+  //   if (user && !isLoadingData && !userDetails && !subscription) {
+  //
+  //     setIsLoadingData(true);
+  //     Promise.allSettled([getUserDetails(), getSubscription()]).then(
+  //       (results) => {
+  //         const userDetailsPromise = results[0];
+  //         const subscriptionPromise = results[1];
+
+  //         if (userDetailsPromise.status === "fulfilled") {
+  //           setUserDetails(userDetailsPromise.value.data as UserDetails);
+  //         }
+
+  //         if (subscriptionPromise.status === "fulfilled") {
+  //           setSubscription(subscriptionPromise.value.data as Subscription);
+  //         }
+
+  //         setIsLoadingData(false);
+  //       }
+  //     );
+  //   } else if (!user && !isLoadingUser && !isLoadingData) {
+  //     setUserDetails(null);
+  //     setSubscription(null);
+  //   }
+  // }, [user, isLoadingUser]);
+
+  //暂时弃用subscription版本
   useEffect(() => {
-    if (user && !isLoadingData && !userDetails && !subscription) {
-      //暂时弃用subscription
+    if (user && !isLoadingData && !userDetails) {
       setIsLoadingData(true);
-      Promise.allSettled([getUserDetails(), getSubscription()]).then(
-        (results) => {
-          const userDetailsPromise = results[0];
-          const subscriptionPromise = results[1];
-
-          if (userDetailsPromise.status === "fulfilled") {
-            setUserDetails(userDetailsPromise.value.data as UserDetails);
-          }
-
-          if (subscriptionPromise.status === "fulfilled") {
-            setSubscription(subscriptionPromise.value.data as Subscription);
-          }
-
-          setIsLoadingData(false);
+      getUserDetails().then((res) => {
+        if (res.data) {
+          setUserDetails(res.data as UserDetails);
         }
-      );
+        setIsLoadingData(false);
+      });
     } else if (!user && !isLoadingUser && !isLoadingData) {
       setUserDetails(null);
-      setSubscription(null);
     }
   }, [user, isLoadingUser]);
 

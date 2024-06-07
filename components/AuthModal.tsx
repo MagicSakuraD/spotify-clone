@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import Modal from "./Modal";
-// import { createClient } from "@supabase/supabase-js";
-// import { createClient } from "@/utils/supabase/client";
 import { supabase } from "@/utils/supabase/client";
 import { Auth } from "@supabase/auth-ui-react";
 import { useRouter } from "next/navigation";
@@ -13,14 +11,13 @@ import {
 } from "@supabase/auth-ui-shared";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useEffect } from "react";
-
-// const supabase = createClient();
+import { useSessionContext } from "@supabase/auth-helpers-react";
 
 const AuthModal = () => {
   const router = useRouter();
 
   const { onClose, isOpen } = useAuthModal();
-  const [isChanged, setIsChanged] = useState(false);
+  const { session } = useSessionContext();
 
   const onChange = (open: boolean) => {
     if (!open) {
@@ -29,23 +26,11 @@ const AuthModal = () => {
   };
 
   useEffect(() => {
-    const checkUser = async () => {
-      // 使用 supabase.auth.getUser() 获取用户信息
-
-      const { data: user, error } = await supabase.auth.getUser();
-      console.log("user", user);
-      setIsChanged(true);
-      if (error) {
-        console.error("获取用户信息出错:", error);
-      } else if (user) {
-        // 用户已登录，进行路由跳转和模态框关闭
-        router.refresh();
-        onClose();
-      }
-    };
-
-    checkUser();
-  }, [router, onClose, isChanged]);
+    if (session) {
+      router.refresh();
+      onClose();
+    }
+  }, [session, router, onClose]);
 
   return (
     <Modal

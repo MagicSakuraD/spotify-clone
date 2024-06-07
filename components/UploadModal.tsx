@@ -22,7 +22,7 @@ import Btn from "@/components/Btn";
 import { toast } from "./ui/use-toast";
 import { useUser } from "@/hooks/useUser";
 import uniqid from "uniqid";
-import { supabase } from "./AuthModal";
+import { supabase } from "@/utils/supabase/client";
 import { title } from "process";
 import { useRouter } from "next/navigation";
 

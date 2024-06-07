@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import React from "react";
-import AccountContent from "./components/AcountContent";
+import AccountContent from "./components/AccountContent";
 
-const Acount = () => {
+const Account = () => {
   return (
     <div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
       <Header className="from-bg-neutral-900">
@@ -10,9 +10,9 @@ const Acount = () => {
           <h1 className="text-white text-3xl font-semibold">Account Setting</h1>
         </div>
       </Header>
-      <AcountContent />
+      <AccountContent />
     </div>
   );
 };
 
-export default Acount;
+export default Account;
