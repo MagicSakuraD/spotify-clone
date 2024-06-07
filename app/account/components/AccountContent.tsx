@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -6,46 +7,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { supabase } from "@/utils/supabase/client";
-
-// import { createClient } from "@/utils/supabase/server";
-import { createClient } from "@supabase/supabase-js";
-
+import { useUser } from "@/hooks/useUser";
+import Avatar from "boring-avatars";
 import React from "react";
 
-// async function getData() {
-//   // The return value is *not* serialized
-//   // You can return Date, Map, Set, etc.
-//   const supabase = createClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-//   );
+const AccountContent = () => {
+  const user = useUser();
 
-//   const {
-//     data: { user },
-//     error,
-//   } = await supabase.auth.getUser();
-
-//   console.log(user);
-
-//   if (error) {
-//     // This will activate the closest `error.js` Error Boundary
-//     console.log(error);
-//     throw new Error("Failed to fetch data");
-//   }
-
-//   return user;
-// }
-
-const AccountContent = async () => {
-  // const user = await getData();
   return (
     <Card className="container mx-auto mt-6">
       <CardHeader>
-        <CardTitle className="">Account Information</CardTitle>
+        <CardTitle className="">Profile</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>Comming soon!</p>
+      <CardContent className="flex gap-x-5 items-center">
+        <Avatar
+          size={40}
+          name={user.user?.email}
+          variant="beam"
+          colors={["#92A1C6", "#146A7C", "#6366f1", "#C271B4", "#f43f5e"]}
+        />
+        <p>{user.user?.email}</p>
       </CardContent>
     </Card>
   );
