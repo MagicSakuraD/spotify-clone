@@ -1,9 +1,10 @@
 import { createClient } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/client";
 
 import { Song } from "@/types";
 
 const useLoadImage = (song: Song) => {
-  const supabase = createClient();
+  // const supabase = createClient();
 
   if (!song) {
     return null;

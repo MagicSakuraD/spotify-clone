@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Modal from "./Modal";
 // import { createClient } from "@supabase/supabase-js";
-import { createClient } from "@/utils/supabase/client";
+// import { createClient } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/client";
 import { Auth } from "@supabase/auth-ui-react";
 import { useRouter } from "next/navigation";
 import {
@@ -13,18 +14,27 @@ import {
 import useAuthModal from "@/hooks/useAuthModal";
 import { useEffect } from "react";
 
-export const supabase = createClient();
+// const supabase = createClient();
 
 const AuthModal = () => {
   const router = useRouter();
 
   const { onClose, isOpen } = useAuthModal();
+  const [isChanged, setIsChanged] = useState(false);
+
+  const onChange = (open: boolean) => {
+    if (!open) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     const checkUser = async () => {
       // 使用 supabase.auth.getUser() 获取用户信息
-      const { data: user, error } = await supabase.auth.getUser();
 
+      const { data: user, error } = await supabase.auth.getUser();
+      console.log("user", user);
+      setIsChanged(true);
       if (error) {
         console.error("获取用户信息出错:", error);
       } else if (user) {
@@ -35,13 +45,7 @@ const AuthModal = () => {
     };
 
     checkUser();
-  }, [router, onClose]);
-
-  const onChange = (open: boolean) => {
-    if (!open) {
-      onClose();
-    }
-  };
+  }, [router, onClose, isChanged]);
 
   return (
     <Modal

@@ -44,6 +44,7 @@ export const MyUserContextProvider = (props: Props) => {
 
   useEffect(() => {
     if (user && !isLoadingData && !userDetails && !subscription) {
+      //暂时弃用subscription
       setIsLoadingData(true);
       Promise.allSettled([getUserDetails(), getSubscription()]).then(
         (results) => {

@@ -7,11 +7,12 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import Btn from "./Btn";
 import useAuthModal from "@/hooks/useAuthModal";
-import { supabase } from "@/components/AuthModal";
+import { supabase } from "@/utils/supabase/client";
 import { useUser } from "@/hooks/useUser";
 import { Button } from "./ui/button";
 import { FaUserAlt } from "react-icons/fa";
 import { useToast } from "@/components/ui/use-toast";
+import usePlayer from "@/hooks/usePlayer";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -23,9 +24,11 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const authModal = useAuthModal();
   const router = useRouter();
   const { user } = useUser();
+  const player = usePlayer();
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
-    //TODO: Reset any playing songs
+
+    player.reset();
     router.refresh();
     if (error) {
       toast({
@@ -71,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
               <Btn onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
               </Btn>
-              <Btn onClick={() => router.push("/acount")} className="bg-white">
+              <Btn onClick={() => router.push("/account")} className="bg-white">
                 <FaUserAlt />
               </Btn>
             </div>
