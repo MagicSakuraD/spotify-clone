@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { IconType } from "react-icons";
 import { twMerge } from "tailwind-merge";
-
+import { useAtom } from "jotai";
+import { isCollapsedAtom } from "@/lib/Atom";
 interface SidebarItemProps {
   icon: IconType;
   label: string;
@@ -15,6 +16,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   active,
   href,
 }) => {
+  const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
+
   return (
     <Link
       href={href}
@@ -24,7 +27,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       )}
     >
       <Icon size={24} />
-      <span className="truncate w-full">{label}</span>
+      <span className={`${isCollapsed ? "hidden" : ""} truncate w-full`}>
+        {label}
+      </span>
     </Link>
   );
 };

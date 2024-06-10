@@ -5,19 +5,23 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { TbMusicCode } from "react-icons/tb";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Box from "@/components/Box";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
 import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 import { twMerge } from "tailwind-merge";
+import { isCollapsedAtom } from "@/lib/Atom";
+import { useAtom } from "jotai";
+
 interface SidebarProps {
   children: React.ReactNode;
   songs: Song[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
+  const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
   const pathname = usePathname();
   const player = usePlayer();
 
@@ -51,7 +55,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
         player.activeId && "h-[calc(100%-80px)]"
       )}
     >
-      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
+      <div
+        className={`hidden md:flex flex-col gap-y-2 bg-black h-full ${
+          isCollapsed ? "w-[90px]" : "w-[300px]"
+        } p-2`}
+      >
         <Box>
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((item) => (
