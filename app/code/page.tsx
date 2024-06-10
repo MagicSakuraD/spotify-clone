@@ -9,7 +9,7 @@ const CodePage = () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="container mx-auto py-4"
+      className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto"
     >
       <ResizablePanel defaultSize={20}>One</ResizablePanel>
       <ResizableHandle />
