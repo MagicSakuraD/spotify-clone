@@ -18,8 +18,8 @@ const Liked = async () => {
                 fill={true}
                 alt="Playlist"
                 src="/images/liked.png"
-                className="object-cover"
-                sizes="100%"
+                className="object-cover md:w-1/2"
+                sizes="(max-width: 768px) 50vw, 33vw"
               />
             </div>
             <div className="flex flex-col gap-y-2 mt-4 md:mt-0">

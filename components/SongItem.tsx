@@ -22,10 +22,11 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
     >
       <div className="relative aspect-square w-full h-full rounded-md overflow-hidden">
         <Image
-          className="object-cover"
+          className="object-cover md:w-1/2"
           src={imagePath || "/images/liked.png"}
           alt="Image"
           fill={true}
+          sizes="(max-width: 768px) 50vw, 33vw"
         />
       </div>
       <div className="flex flex-col items-start w-full p-4 gap-y-1">

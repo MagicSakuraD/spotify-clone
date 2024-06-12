@@ -34,7 +34,8 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
           fill={true}
           src={imageUrl || "/images/liked.png"}
           alt="Media Item"
-          className="object-cover"
+          className="object-cover md:w-1/2"
+          sizes="(max-width: 768px) 50vw, 33vw"
         />
       </div>
       <div
