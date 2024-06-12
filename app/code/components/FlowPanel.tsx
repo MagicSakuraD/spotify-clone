@@ -1,6 +1,11 @@
-import React, { useState, useRef, useCallback, DragEvent } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  DragEvent,
+  useMemo,
+} from "react";
 import ReactFlow, {
-  ReactFlowProvider,
   addEdge,
   useNodesState,
   useEdgesState,
@@ -45,7 +50,11 @@ const FlowPanel = () => {
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
 
-      const type = event.dataTransfer.getData("application/reactflow");
+      //sitll have problem with event.dataTransfer.getData
+      const type = useMemo(
+        () => event.dataTransfer.getData("application/reactflow"),
+        []
+      );
 
       // check if the dropped element is valid
       if (typeof type === "undefined" || !type) {
@@ -56,7 +65,6 @@ const FlowPanel = () => {
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
       if (reactFlowInstance) {
-        console.log("right");
         const position = reactFlowInstance.screenToFlowPosition({
           x: event.clientX,
           y: event.clientY,

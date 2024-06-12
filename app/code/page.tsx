@@ -16,11 +16,11 @@ const CodePage = () => {
         direction="horizontal"
         className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto"
       >
-        <ResizablePanel defaultSize={20}>
+        <ResizablePanel defaultSize={30}>
           <DragPanel />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={80}>
+        <ResizablePanel defaultSize={70}>
           <FlowPanel />
         </ResizablePanel>
       </ResizablePanelGroup>
