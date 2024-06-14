@@ -16,12 +16,18 @@ import ReactFlow, {
   ReactFlowInstance,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import MusicNode from "./MusicNode";
+import { title } from "process";
+
+const nodeTypes = {
+  music: MusicNode,
+};
 
 const initialNodes = [
   {
     id: "1",
-    type: "input",
-    data: { label: "input node" },
+    type: "music",
+    data: { title: "input node" },
     position: { x: 250, y: 5 },
   },
 ];
@@ -51,10 +57,8 @@ const FlowPanel = () => {
       event.preventDefault();
 
       //sitll have problem with event.dataTransfer.getData
-      const type = useMemo(
-        () => event.dataTransfer.getData("application/reactflow"),
-        []
-      );
+      const type = event.dataTransfer.getData("application/reactflow");
+      console.log(type);
 
       // check if the dropped element is valid
       if (typeof type === "undefined" || !type) {
@@ -73,7 +77,10 @@ const FlowPanel = () => {
           id: getId(),
           type,
           position,
-          data: { label: `${type} node` },
+          isConnectable: true, // or false, depending on your requirements
+          data: {
+            title: `${type} node`,
+          },
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -86,6 +93,7 @@ const FlowPanel = () => {
     <div className="h-full" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
+        nodeTypes={nodeTypes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}

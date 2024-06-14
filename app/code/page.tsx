@@ -20,7 +20,7 @@ const CodePage = () => {
           <DragPanel />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={70}>
+        <ResizablePanel defaultSize={70} className="mr-2">
           <FlowPanel />
         </ResizablePanel>
       </ResizablePanelGroup>

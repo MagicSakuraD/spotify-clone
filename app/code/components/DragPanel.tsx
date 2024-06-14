@@ -14,21 +14,21 @@ export default () => {
       </div>
       <div
         className="rounded-lg border-2 border-neutral-500"
-        onDragStart={(event) => onDragStart(event, "input")}
+        onDragStart={(event) => onDragStart(event, "music")}
         draggable
       >
         Input Node
       </div>
       <div
         className="rounded-lg border-2 border-neutral-500"
-        onDragStart={(event) => onDragStart(event, "default")}
+        onDragStart={(event) => onDragStart(event, "music")}
         draggable
       >
         Default Node
       </div>
       <div
         className="rounded-lg border-2 border-neutral-500"
-        onDragStart={(event) => onDragStart(event, "output")}
+        onDragStart={(event) => onDragStart(event, "music")}
         draggable
       >
         Output Node
