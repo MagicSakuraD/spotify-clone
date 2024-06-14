@@ -9,22 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// Create the brain of our audio-processing graph
-const context = new AudioContext();
-
-// Create an oscillator node to generate tones
-const osc = context.createOscillator();
-
-// Create a gain node to control the volume
-const amp = context.createGain();
-
-// Pass the oscillator's output through the gain node and to our speakers
-osc.connect(amp);
-amp.connect(context.destination);
-
-// Start generating those tones!
-osc.start();
-
 export type MusicNodeProps = {
   title: string;
   icon?: ReactNode;
