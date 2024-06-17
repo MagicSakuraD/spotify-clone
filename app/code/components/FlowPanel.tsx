@@ -18,6 +18,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import MusicNode from "./MusicNode";
 import { title } from "process";
+import uniqid from "uniqid";
 
 const nodeTypes = {
   music: MusicNode,
@@ -33,7 +34,7 @@ const initialNodes = [
 ];
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => uniqid("muinn_");
 
 const FlowPanel = () => {
   const reactFlowWrapper = useRef(null);
