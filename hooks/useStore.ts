@@ -28,7 +28,7 @@ const initialNodes: Node = [
   {
     id: "1",
     type: "osc",
-    data: { label: "input node" },
+    data: { label: "input node", frequency: 440, type: "sine" },
     position: { x: 250, y: 5 },
   },
 ];

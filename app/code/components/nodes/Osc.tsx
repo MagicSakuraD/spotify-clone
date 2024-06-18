@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { useAtom } from "jotai";
 import { useStore } from "@/hooks/useStore";
+import { Separator } from "@/components/ui/separator";
 
 // 定义 OscProps 接口
 interface OscProps {
@@ -45,26 +46,32 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
   };
 
   return (
-    <Card>
+    <Card className="border-violet-600">
       <CardHeader>
         <CardTitle>Oscillator Node</CardTitle>
         {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
-      <CardContent className="nodrag">
-        <div>{id}</div>
+      <CardContent className="nodrag flex flex-col space-y-10">
         <label>
-          <span>Frequency</span>
+          <div className="flex justify-between ">
+            <span>Frequency</span>
+            <span>{data.frequency} Hz</span>
+          </div>
+
           <Slider
             defaultValue={[data.frequency]}
-            max={100}
+            max={1000}
             step={1}
             onValueChange={handleFrequencyChange}
           />
         </label>
+
         <label>
           <span>Waveform</span>
           <Select onValueChange={handleTypeChange} defaultValue={data.type}>
-            <SelectTrigger />
+            <SelectTrigger className="">
+              <SelectValue placeholder="Select a type" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="sine">sine</SelectItem>
               <SelectItem value="triangle">triangle</SelectItem>
@@ -74,7 +81,6 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
           </Select>
         </label>
       </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 };
