@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconType } from "react-icons";
 import { twMerge } from "tailwind-merge";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { isCollapsedAtom } from "@/lib/Atom";
 interface SidebarItemProps {
   icon: IconType;
@@ -16,7 +16,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   active,
   href,
 }) => {
-  const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
+  const isCollapsed = useAtomValue(isCollapsedAtom);
 
   return (
     <Link

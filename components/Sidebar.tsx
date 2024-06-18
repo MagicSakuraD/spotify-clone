@@ -13,7 +13,7 @@ import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 import { twMerge } from "tailwind-merge";
 import { isCollapsedAtom } from "@/lib/Atom";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
-  const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
+  const isCollapsed = useAtomValue(isCollapsedAtom);
   const pathname = usePathname();
   const player = usePlayer();
 

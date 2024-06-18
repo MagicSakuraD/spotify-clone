@@ -4,7 +4,7 @@ import React from "react";
 import useLoadImage from "@/hooks/useLoadImage";
 import Image from "next/image";
 import usePlayer from "@/hooks/usePlayer";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { isCollapsedAtom } from "@/lib/Atom";
 interface MediaItemProps {
   data: Song;
@@ -13,7 +13,8 @@ interface MediaItemProps {
 
 const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
   const player = usePlayer();
-  const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
+
+  const isCollapsed = useAtomValue(isCollapsedAtom);
   const imageUrl = useLoadImage(data);
 
   const handleClick = () => {

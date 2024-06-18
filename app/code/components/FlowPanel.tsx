@@ -5,48 +5,28 @@ import React, {
   DragEvent,
   useMemo,
 } from "react";
-import ReactFlow, {
-  addEdge,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
-  ReactFlowInstance,
-} from "reactflow";
+import ReactFlow, { Controls, ReactFlowInstance } from "reactflow";
 import "reactflow/dist/style.css";
 import MusicNode from "./MusicNode";
+import Osc from "./nodes/Osc";
 import { title } from "process";
 import uniqid from "uniqid";
+import { atom } from "jotai";
+import { atomWithImmer } from "jotai-immer";
+import { useStore } from "@/hooks/useStore";
 
 const nodeTypes = {
-  music: MusicNode,
+  osc: Osc,
 };
 
-const initialNodes = [
-  {
-    id: "1",
-    type: "music",
-    data: { title: "input node" },
-    position: { x: 250, y: 5 },
-  },
-];
-
-let id = 0;
-const getId = () => uniqid("muinn_");
-
 const FlowPanel = () => {
+  const { nodes, edges, onNodesChange, onEdgesChange, addEdge } = useStore();
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  // const oscNode = [{ id: "1", data: { frequency: 440, type: "sine" } }];
+
+  // const oscNodeAtom = atomWithImmer(oscNode);
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
-
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
 
   const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -65,27 +45,9 @@ const FlowPanel = () => {
       if (typeof type === "undefined" || !type) {
         return;
       }
-
       // reactFlowInstance.project was renamed to reactFlowInstance.screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
-      if (reactFlowInstance) {
-        const position = reactFlowInstance.screenToFlowPosition({
-          x: event.clientX,
-          y: event.clientY,
-        });
-        const newNode = {
-          id: getId(),
-          type,
-          position,
-          isConnectable: true, // or false, depending on your requirements
-          data: {
-            title: `${type} node`,
-          },
-        };
-
-        setNodes((nds) => nds.concat(newNode));
-      }
     },
     [reactFlowInstance]
   );
@@ -94,11 +56,11 @@ const FlowPanel = () => {
     <div className="h-full" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
-        nodeTypes={nodeTypes}
+        // nodeTypes={nodeTypes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        onConnect={addEdge}
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
