@@ -56,14 +56,14 @@ const FlowPanel = () => {
     <div className="h-full" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
-        // nodeTypes={nodeTypes}
+        nodeTypes={nodeTypes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={addEdge}
-        onInit={setReactFlowInstance}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
+        // onInit={setReactFlowInstance}
+        // onDrop={onDrop}
+        // onDragOver={onDragOver}
         fitView
       >
         <Controls />

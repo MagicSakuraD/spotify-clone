@@ -19,7 +19,7 @@ type Node = [
   {
     id: string;
     type: string;
-    data: { title: string; frequency?: number; type?: string };
+    data: { label: string; frequency?: number; type?: string };
     position: { x: number; y: number };
   }
 ];
@@ -27,8 +27,8 @@ type Node = [
 const initialNodes: Node = [
   {
     id: "1",
-    type: "music",
-    data: { title: "input node" },
+    type: "osc",
+    data: { label: "input node" },
     position: { x: 250, y: 5 },
   },
 ];
@@ -45,7 +45,7 @@ export const useStore = () => {
 
   const onNodesChange = (changes: NodeChange[]) => {
     setFlowState((draft) => {
-      applyNodeChanges(changes, draft.nodes);
+      draft.nodes = applyNodeChanges(changes, draft.nodes);
     });
   };
 
@@ -60,7 +60,7 @@ export const useStore = () => {
 
   const onEdgesChange = (changes: EdgeChange[]) => {
     setFlowState((draft) => {
-      applyEdgeChanges(changes, draft.edges);
+      draft.edges = applyEdgeChanges(changes, draft.edges);
     });
   };
 
