@@ -24,7 +24,7 @@ const Out: React.FC<OutProps> = ({ id, data }) => {
     setIsRunning(!isRunning);
   };
   return (
-    <Card className="border-violet-600 container">
+    <Card className="border-violet-600 ">
       <CardHeader>
         <CardTitle>Output Node</CardTitle>
       </CardHeader>

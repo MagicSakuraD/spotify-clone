@@ -13,10 +13,12 @@ import Osc from "./nodes/Osc";
 import { atomWithImmer } from "jotai-immer";
 import { useStore } from "@/hooks/useStore";
 import Out from "./nodes/Out";
+import Amp from "./nodes/Amp";
 
 const nodeTypes = {
   osc: Osc,
   out: Out,
+  amp: Amp,
 };
 
 const FlowPanel = () => {

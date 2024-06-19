@@ -18,7 +18,7 @@ type State = {
 type Node = {
   id: string;
   type: string;
-  data: { label: string; frequency?: number; type?: string };
+  data: { label: string; frequency?: number; type?: string; gain?: number };
   position: { x: number; y: number };
 };
 
@@ -34,6 +34,12 @@ const initialNodes: Node[] = [
     type: "out",
     data: { label: "output node" },
     position: { x: 250, y: 300 },
+  },
+  {
+    id: "3",
+    type: "amp",
+    data: { label: "amplifier node", gain: 0.5 },
+    position: { x: 50, y: 150 },
   },
 ];
 
