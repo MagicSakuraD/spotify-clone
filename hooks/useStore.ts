@@ -15,21 +15,25 @@ type State = {
   edges: Array<Edge>;
 };
 
-type Node = [
-  {
-    id: string;
-    type: string;
-    data: { label: string; frequency?: number; type?: string };
-    position: { x: number; y: number };
-  }
-];
+type Node = {
+  id: string;
+  type: string;
+  data: { label: string; frequency?: number; type?: string };
+  position: { x: number; y: number };
+};
 
-const initialNodes: Node = [
+const initialNodes: Node[] = [
   {
     id: "1",
     type: "osc",
     data: { label: "input node", frequency: 440, type: "sine" },
     position: { x: 250, y: 5 },
+  },
+  {
+    id: "2",
+    type: "out",
+    data: { label: "output node" },
+    position: { x: 250, y: 300 },
   },
 ];
 

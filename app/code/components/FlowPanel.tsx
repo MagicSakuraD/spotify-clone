@@ -7,16 +7,16 @@ import React, {
 } from "react";
 import ReactFlow, { Controls, ReactFlowInstance } from "reactflow";
 import "reactflow/dist/style.css";
-import MusicNode from "./MusicNode";
+
 import Osc from "./nodes/Osc";
-import { title } from "process";
-import uniqid from "uniqid";
-import { atom } from "jotai";
+
 import { atomWithImmer } from "jotai-immer";
 import { useStore } from "@/hooks/useStore";
+import Out from "./nodes/Out";
 
 const nodeTypes = {
   osc: Osc,
+  out: Out,
 };
 
 const FlowPanel = () => {
