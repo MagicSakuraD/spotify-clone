@@ -15,7 +15,7 @@ import getSongsByUserId from "@/actions/getSongsByUserId";
 import Player from "@/components/Player";
 
 export const metadata: Metadata = {
-  title: "Spotify Clone",
+  title: "Muinn",
   description: "Listen to music and play!",
 };
 
