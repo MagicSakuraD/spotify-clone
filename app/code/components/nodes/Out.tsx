@@ -1,7 +1,8 @@
 import React from "react";
 import { Handle, Position } from "reactflow";
-import { useAtom } from "jotai";
-import { isRunningAtom } from "@/lib/Atom";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+
+import { isRunningAtom, toggleAudioAtom } from "@/lib/Atom";
 import {
   Card,
   CardContent,
@@ -18,11 +19,9 @@ interface OutProps {
 }
 
 const Out: React.FC<OutProps> = ({ id, data }) => {
-  const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  const isRunning = useAtomValue(isRunningAtom);
+  const toggleAudio = useSetAtom(toggleAudioAtom);
 
-  const toggleAudio = () => {
-    setIsRunning(!isRunning);
-  };
   return (
     <Card className="border-violet-600 ">
       <CardHeader>

@@ -33,13 +33,13 @@ const Amp: React.FC<AmpProps> = ({ id, data }) => {
         <label>
           <div className="flex justify-between ">
             <span>Gain</span>
-            <span>{data.gain}</span>
+            <span>{data.gain.toFixed(2)}</span>
           </div>
 
           <Slider
             defaultValue={[data.gain]}
-            max={1.0}
-            step={0.1}
+            max={1}
+            step={0.01}
             onValueChange={handleGainChange}
           />
         </label>

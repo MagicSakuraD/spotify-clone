@@ -22,7 +22,16 @@ const nodeTypes = {
 };
 
 const FlowPanel = () => {
-  const { nodes, edges, onNodesChange, onEdgesChange, addEdge } = useStore();
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    removeNodes,
+    EdgesDelete,
+    onEdgesChange,
+    createNode,
+    addEdge,
+  } = useStore();
   const reactFlowWrapper = useRef(null);
   // const oscNode = [{ id: "1", data: { frequency: 440, type: "sine" } }];
 
@@ -47,6 +56,7 @@ const FlowPanel = () => {
       if (typeof type === "undefined" || !type) {
         return;
       }
+      createNode(type);
       // reactFlowInstance.project was renamed to reactFlowInstance.screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
@@ -63,9 +73,11 @@ const FlowPanel = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={addEdge}
-        // onInit={setReactFlowInstance}
-        // onDrop={onDrop}
-        // onDragOver={onDragOver}
+        onNodesDelete={(nodes) => removeNodes(nodes as any)}
+        onEdgesDelete={(edges) => EdgesDelete(edges as any)}
+        onInit={setReactFlowInstance}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
         fitView
       >
         <Controls />
