@@ -39,20 +39,8 @@ type Node = {
 const initialNodes: Node[] = [
   {
     id: "1",
-    type: "osc",
-    data: { label: "input node", frequency: 440, type: "sine" },
-    position: { x: 250, y: 5 },
-  },
-  {
-    id: "2",
     type: "out",
-    data: { label: "output node" },
-    position: { x: 250, y: 300 },
-  },
-  {
-    id: "3",
-    type: "amp",
-    data: { label: "amplifier node", gain: 0.5 },
+    data: { label: "out node" },
     position: { x: 50, y: 150 },
   },
 ];
