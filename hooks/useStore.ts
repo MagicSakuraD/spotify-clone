@@ -38,9 +38,9 @@ type Node = {
 
 const initialNodes: Node[] = [
   {
-    id: "adc",
-    type: "dac",
-    data: { label: "dac" },
+    id: "1",
+    type: "osc",
+    data: { label: "Osc", frequency: 440, type: "sine" },
     position: { x: 50, y: 150 },
   },
 ];
