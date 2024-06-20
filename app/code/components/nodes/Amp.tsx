@@ -27,7 +27,7 @@ const Amp: React.FC<AmpProps> = ({ id, data }) => {
   return (
     <Card className="border-violet-600">
       <CardHeader>
-        <CardTitle>Amp Node</CardTitle>
+        <CardTitle>Amp</CardTitle>
       </CardHeader>
       <CardContent>
         <label>

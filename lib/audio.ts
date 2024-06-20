@@ -4,20 +4,26 @@ import { NodeData } from "@/hooks/useStore";
 const context = new AudioContext();
 const nodes = new Map();
 
-context.suspend();
-// const osc = context.createOscillator();
-// osc.frequency.value = 220;
-// osc.type = "square";
-// osc.start();
+// context.suspend();
 
-// const amp = context.createGain();
-// amp.gain.value = 0.5;
+const osc = context.createOscillator();
+osc.frequency.value = 220;
+osc.type = "square";
+osc.start();
 
-// const out = context.destination;
+const amp = context.createGain();
+amp.gain.value = 0.5;
 
-// nodes.set("1", osc);
-// nodes.set("2", amp);
-// nodes.set("3", out);
+const masterGain = context.createGain();
+masterGain.gain.value = 0.8;
+
+osc.connect(amp);
+amp.connect(masterGain);
+masterGain.connect(context.destination);
+
+nodes.set("osc", osc);
+nodes.set("amp", amp);
+nodes.set("dac", context.destination);
 
 export function createAudioNode(id: string, type: string, data: any) {
   switch (type) {
@@ -35,6 +41,13 @@ export function createAudioNode(id: string, type: string, data: any) {
       const node = context.createGain();
       node.gain.value = data.gain;
 
+      nodes.set(id, node);
+      break;
+    }
+
+    case "dac": {
+      const node = context.createGain();
+      node.gain.value = data.gain;
       nodes.set(id, node);
       break;
     }

@@ -48,7 +48,7 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
   return (
     <Card className="border-violet-600">
       <CardHeader>
-        <CardTitle>Oscillator Node</CardTitle>
+        <CardTitle>Oscillator</CardTitle>
         {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
       <CardContent className="nodrag flex flex-col space-y-10">

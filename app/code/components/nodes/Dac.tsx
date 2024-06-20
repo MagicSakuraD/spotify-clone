@@ -12,20 +12,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { useStore } from "@/hooks/useStore";
 
-interface OutProps {
+interface DacProps {
   id: string;
-  data: any;
+  data: { gain: number };
 }
 
-const Out: React.FC<OutProps> = ({ id, data }) => {
+const Dac: React.FC<DacProps> = ({ id, data }) => {
+  const { updateNode } = useStore();
+
+  const handleGainChange = (value: number[]) => {
+    updateNode(id, { gain: value[0] });
+  };
   const isRunning = useAtomValue(isRunningAtom);
   const toggleAudio = useSetAtom(toggleAudioAtom);
 
   return (
     <Card className="border-violet-600 ">
       <CardHeader>
-        <CardTitle>Output Node</CardTitle>
+        <CardTitle>dac</CardTitle>
       </CardHeader>
       <CardContent className="text-center">
         <Button onClick={toggleAudio} variant={"ghost"}>
@@ -39,10 +46,16 @@ const Out: React.FC<OutProps> = ({ id, data }) => {
             </span>
           )}
         </Button>
+        <Slider
+          defaultValue={[data.gain]}
+          max={1000}
+          step={1}
+          onValueChange={handleGainChange}
+        />
       </CardContent>
       <Handle type="target" position={Position.Left} />
     </Card>
   );
 };
 
-export default Out;
+export default Dac;

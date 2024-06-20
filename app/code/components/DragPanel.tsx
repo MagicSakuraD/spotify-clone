@@ -9,29 +9,27 @@ export default () => {
 
   return (
     <aside>
-      <div className="description">
-        You can drag these nodes to the pane on the right.
-      </div>
+      <div className="description">nodes</div>
       <div
         className="rounded-lg border-2 border-neutral-500"
         onDragStart={(event) => onDragStart(event, "osc")}
         draggable
       >
-        Input Node
+        Osc
       </div>
       <div
         className="rounded-lg border-2 border-neutral-500"
         onDragStart={(event) => onDragStart(event, "amp")}
         draggable
       >
-        Default Node
+        Amp
       </div>
       <div
         className="rounded-lg border-2 border-neutral-500"
-        onDragStart={(event) => onDragStart(event, "amp")}
+        onDragStart={(event) => onDragStart(event, "dac")}
         draggable
       >
-        Output Node
+        Dac
       </div>
     </aside>
   );

@@ -12,12 +12,12 @@ import Osc from "./nodes/Osc";
 
 import { atomWithImmer } from "jotai-immer";
 import { useStore } from "@/hooks/useStore";
-import Out from "./nodes/Out";
+import Dac from "./nodes/Dac";
 import Amp from "./nodes/Amp";
 
 const nodeTypes = {
   osc: Osc,
-  out: Out,
+  dac: Dac,
   amp: Amp,
 };
 
