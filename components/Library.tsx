@@ -35,22 +35,22 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
     <div className="flex flex-col">
       <div
         className="
-    flex
-    items-center
-    justify-between 
-    px-5
-    py-4"
+          flex
+          items-center
+          justify-between 
+          px-5
+          py-4"
       >
         <div className="inline-flex items-center gap-x-2">
           <TbPlaylist
             size={26}
-            className="text-neutral-400 hover: cursor-pointer"
+            className="hover: cursor-pointer"
             onClick={toggleCollapse}
           />
           <span
             className={`${
-              isCollapsed ? "hidden" : ""
-            } text-md font-medium text-neutral-400`}
+              isCollapsed ? "hidden" : "text-inherit"
+            } text-md font-medium`}
           >
             Your Library
           </span>
@@ -60,7 +60,7 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
           size={20}
           className={`${
             isCollapsed ? "hidden" : ""
-          } text-neutral-400 cursor-pointer hover:text-white transition`}
+          }  cursor-pointer hover:text-violet-600 transition`}
         />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">

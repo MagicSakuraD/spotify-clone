@@ -2,28 +2,8 @@
 import { NodeData } from "@/hooks/useStore";
 
 const context = new AudioContext();
+context.suspend(); // 初始时挂起 AudioContext
 const nodes = new Map();
-
-// context.suspend();
-
-const osc = context.createOscillator();
-osc.frequency.value = 220;
-osc.type = "square";
-osc.start();
-
-const amp = context.createGain();
-amp.gain.value = 0.5;
-
-const masterGain = context.createGain();
-masterGain.gain.value = 0.8;
-
-osc.connect(amp);
-amp.connect(masterGain);
-masterGain.connect(context.destination);
-
-nodes.set("osc", osc);
-nodes.set("amp", amp);
-nodes.set("dac", context.destination);
 
 export function createAudioNode(id: string, type: string, data: any) {
   switch (type) {
@@ -48,23 +28,31 @@ export function createAudioNode(id: string, type: string, data: any) {
     case "dac": {
       const node = context.createGain();
       node.gain.value = data.gain;
+      node.connect(context.destination);
       nodes.set(id, node);
       break;
     }
   }
 }
 
-export function updateAudioNode(id: string, data: NodeData): void {
+export function updateAudioNode(id: string, data: any): void {
   const node = nodes.get(id);
+  console.log(node);
 
-  for (const [key, val] of Object.entries(data)) {
+  if (!node) {
+    console.error(`Node with id ${id} not found.`);
+    return;
+  }
+
+  // 确保所有属性都更新
+  for (const key in data) {
+    console.log(data);
     if (node[key] instanceof AudioParam) {
-      (node[key] as AudioParam).value = val as number;
+      (node[key] as AudioParam).value = data[key];
     } else {
-      node[key] = val;
+      node[key] = data[key];
     }
   }
-  console.log(data.frequency, data.gain);
 }
 
 export function removeAudioNode(id: string) {
@@ -80,8 +68,14 @@ export function connect(sourceId: string, targetId: string) {
   const source = nodes.get(sourceId);
   const target = nodes.get(targetId);
 
-  if (source && target) {
+  try {
     source.connect(target);
+    console.log(`Connected node ${sourceId} to node ${targetId}.`);
+  } catch (error) {
+    console.error(
+      `Failed to connect node ${sourceId} to node ${targetId}:`,
+      error
+    );
   }
 }
 

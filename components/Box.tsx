@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { Card } from "./ui/card";
 
 interface BoxProps {
   children: React.ReactNode;
@@ -6,11 +7,9 @@ interface BoxProps {
 }
 const Box: React.FC<BoxProps> = ({ children, className }) => {
   return (
-    <div
-      className={twMerge(`bg-neutral-900 rounded-lg h-fit w-full`, className)}
-    >
+    <Card className={twMerge(`rounded-lg h-fit w-full`, className)}>
       {children}
-    </div>
+    </Card>
   );
 };
 

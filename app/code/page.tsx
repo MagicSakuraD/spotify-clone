@@ -14,7 +14,7 @@ const CodePage = () => {
     <ReactFlowProvider>
       <ResizablePanelGroup
         direction="horizontal"
-        className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto"
+        className="rounded-lg h-full w-full overflow-hidden overflow-y-auto"
       >
         <ResizablePanel defaultSize={30}>
           <DragPanel />

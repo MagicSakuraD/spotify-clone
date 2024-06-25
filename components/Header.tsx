@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import { FaUserAlt } from "react-icons/fa";
 import { useToast } from "@/components/ui/use-toast";
 import usePlayer from "@/hooks/usePlayer";
+import Avatar from "boring-avatars";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -44,27 +45,27 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div className={twMerge(`h-fit bg-gradient-to-b from-emerald-800 p-6`)}>
+    <div className={twMerge(`h-fit bg-gradient-to-b from-violet-800 p-6`)}>
       <div className="w-full mb-4 flex items-center justify-between">
         <div className="hidden md:flex gap-x-2 items-center">
           <button
-            className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-full bg-inherit flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.back()}
           >
-            <RxCaretLeft size={35} className="text-white" />
+            <RxCaretLeft size={35} />
           </button>
           <button
-            className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition"
+            className="rounded-full bg-inherit flex items-center justify-center hover:opacity-75 transition"
             onClick={() => router.forward()}
           >
-            <RxCaretRight size={35} className="text-white" />
+            <RxCaretRight size={35} />
           </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-cente justify-center hover:opacity-75 transition">
           <button className="rounded-full bg-white p-2">
             <HiHome size={20} className="text-black" />
           </button>
-          <button className="rounded-full bg-white p-2">
+          <button className="rounded-full bg-white  p-2">
             <BiSearch size={20} className="text-black" />
           </button>
         </div>
@@ -74,9 +75,20 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
               <Btn onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
               </Btn>
-              <Btn onClick={() => router.push("/account")} className="bg-white">
-                <FaUserAlt />
-              </Btn>
+              <button onClick={() => router.push("/account")}>
+                <Avatar
+                  size={42}
+                  name={user.email}
+                  variant="beam"
+                  colors={[
+                    "#92A1C6",
+                    "#146A7C",
+                    "#6366f1",
+                    "#C271B4",
+                    "#f43f5e",
+                  ]}
+                />
+              </button>
             </div>
           ) : (
             <>

@@ -1,3 +1,4 @@
+"use client";
 import React, {
   useState,
   useRef,
@@ -61,7 +62,7 @@ const FlowPanel = () => {
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
     },
-    [reactFlowInstance]
+    [reactFlowInstance, createNode]
   );
 
   return (

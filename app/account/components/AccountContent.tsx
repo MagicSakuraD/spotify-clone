@@ -15,7 +15,7 @@ const AccountContent = () => {
   const user = useUser();
 
   return (
-    <Card className="container mx-auto mt-6">
+    <Card className="mx-auto mt-6">
       <CardHeader>
         <CardTitle className="">Profile</CardTitle>
       </CardHeader>

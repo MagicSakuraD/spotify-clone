@@ -1,15 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+// import { Figtree } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ModeToggle";
 import SupabaseProvider from "@/providers/SupabaseProvider";
-
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
-const font = Figtree({ subsets: ["latin"] });
+// const font = Figtree({
+//   subsets: ["latin"],
+// });
 import { Toaster } from "@/components/ui/toaster";
 import getSongsByUserId from "@/actions/getSongsByUserId";
 import Player from "@/components/Player";
@@ -29,7 +28,8 @@ export default async function RootLayout({
   const userSongs = await getSongsByUserId();
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body>
+        {/* <body className={font.className}> */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

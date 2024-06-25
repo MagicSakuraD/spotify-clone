@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
       )}
     >
       <div
-        className={`hidden md:flex flex-col gap-y-2 bg-black h-full ${
+        className={`hidden md:flex flex-col gap-y-2  h-full ${
           isCollapsed ? "w-[90px]" : "w-[300px]"
         } p-2`}
       >
@@ -71,9 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
           <Library songs={songs} />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto bg-black py-2">
-        {children}
-      </main>
+      <main className="h-full flex-1 overflow-y-auto  py-2">{children}</main>
     </div>
   );
 };

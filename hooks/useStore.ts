@@ -1,3 +1,4 @@
+"use client";
 import {
   applyNodeChanges,
   applyEdgeChanges,
@@ -36,14 +37,7 @@ type Node = {
   position: { x: number; y: number };
 };
 
-const initialNodes: Node[] = [
-  {
-    id: "1",
-    type: "osc",
-    data: { label: "Osc", frequency: 440, type: "sine" },
-    position: { x: 50, y: 150 },
-  },
-];
+const initialNodes: Node[] = [];
 
 const initialState: State = {
   nodes: initialNodes,
@@ -67,6 +61,10 @@ export const useStore = () => {
       }
       case "amp": {
         data = { gain: 0.5 };
+        break;
+      }
+      case "dac": {
+        data = { gain: 0.3 };
         break;
       }
       default:

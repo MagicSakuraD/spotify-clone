@@ -38,18 +38,18 @@ const Dac: React.FC<DacProps> = ({ id, data }) => {
         <Button onClick={toggleAudio} variant={"ghost"}>
           {isRunning ? (
             <span role="img" aria-label="mute">
-              🔇
+              🔈
             </span>
           ) : (
             <span role="img" aria-label="unmute">
-              🔈
+              🔇
             </span>
           )}
         </Button>
         <Slider
           defaultValue={[data.gain]}
-          max={1000}
-          step={1}
+          max={1}
+          step={0.01}
           onValueChange={handleGainChange}
         />
       </CardContent>

@@ -17,7 +17,7 @@ export default function Error({
 
   return (
     <Box className="h-full flex items-center justify-center">
-      <h2 className="text-neutral-400">Something went wrong!</h2>
+      <h2 className="">Something went wrong!</h2>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
