@@ -8,23 +8,28 @@ import {
 import DragPanel from "./components/DragPanel";
 import { ReactFlowProvider } from "reactflow";
 import FlowPanel from "./components/FlowPanel";
+import Header from "@/components/Header";
 
 const CodePage = () => {
   return (
-    <ReactFlowProvider>
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="rounded-lg h-full w-full overflow-hidden overflow-y-auto"
-      >
-        <ResizablePanel defaultSize={30}>
-          <DragPanel />
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel defaultSize={70} className="mr-2">
-          <FlowPanel />
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </ReactFlowProvider>
+    <main className="rounded-lg h-full w-full overflow-hidden overflow-y-auto">
+      <Header className="from-bg-neutral-900">
+        <div className="mb-2 flex flex-col gap-y-6">
+          <h1 className="text-3xl font-semibold">Audio</h1>
+        </div>
+      </Header>
+      <ReactFlowProvider>
+        <ResizablePanelGroup direction="horizontal" className="p-6">
+          <ResizablePanel defaultSize={20}>
+            <DragPanel />
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={80} className="">
+            <FlowPanel />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </ReactFlowProvider>
+    </main>
   );
 };
 

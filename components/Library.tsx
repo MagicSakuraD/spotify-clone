@@ -41,10 +41,10 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
           px-5
           py-4"
       >
-        <div className="inline-flex items-center gap-x-2">
+        <div className="inline-flex items-center gap-x-2 hover:text-violet-600">
           <TbPlaylist
             size={26}
-            className="hover: cursor-pointer"
+            className="hover: cursor-pointer "
             onClick={toggleCollapse}
           />
           <span

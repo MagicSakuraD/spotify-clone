@@ -46,7 +46,7 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
   };
 
   return (
-    <Card className="border-violet-600">
+    <Card className="border-violet-600 shadow-lg shadow-violet-500/50">
       <CardHeader>
         <CardTitle>Oscillator</CardTitle>
         {/* <CardDescription>Card Description</CardDescription> */}

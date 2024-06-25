@@ -30,7 +30,7 @@ const Dac: React.FC<DacProps> = ({ id, data }) => {
   const toggleAudio = useSetAtom(toggleAudioAtom);
 
   return (
-    <Card className="border-violet-600 ">
+    <Card className="border-violet-600 shadow-lg shadow-violet-500/50">
       <CardHeader>
         <CardTitle>dac</CardTitle>
       </CardHeader>

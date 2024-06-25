@@ -5,7 +5,7 @@ import {
   toggleAudio as performToggleAudio,
 } from "./audio";
 
-export const isCollapsedAtom = atom(false);
+export const isCollapsedAtom = atom(true);
 
 const oscNode = [{ id: "1", data: { frequency: 440, type: "sine" } }];
 

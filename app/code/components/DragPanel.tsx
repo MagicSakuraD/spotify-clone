@@ -1,5 +1,6 @@
 "use client";
 import React, { DragEvent } from "react";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 const DragPanel = () => {
   const onDragStart = (event: DragEvent<HTMLDivElement>, nodeType: string) => {
@@ -7,30 +8,20 @@ const DragPanel = () => {
     event.dataTransfer.effectAllowed = "move";
   };
 
+  const nodeTypes = ["Osc", "Amp", "Dac"];
+
   return (
-    <aside>
-      <div className="description">nodes</div>
-      <div
-        className="rounded-lg border-2 "
-        onDragStart={(event) => onDragStart(event, "osc")}
-        draggable
-      >
-        Osc
-      </div>
-      <div
-        className="rounded-lg border-2 "
-        onDragStart={(event) => onDragStart(event, "amp")}
-        draggable
-      >
-        Amp
-      </div>
-      <div
-        className="rounded-lg border-2 "
-        onDragStart={(event) => onDragStart(event, "dac")}
-        draggable
-      >
-        Dac
-      </div>
+    <aside className="flex flex-col gap-3 m-3">
+      {nodeTypes.map((nodeType) => (
+        <Card
+          key={nodeType}
+          className="text-center shadow-violet-500/40 p-3 hover:bg-violet-600"
+          onDragStart={(event) => onDragStart(event, nodeType.toLowerCase())}
+          draggable
+        >
+          {nodeType}
+        </Card>
+      ))}
     </aside>
   );
 };
