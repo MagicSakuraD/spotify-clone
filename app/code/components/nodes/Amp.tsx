@@ -31,9 +31,11 @@ const Amp: React.FC<AmpProps> = ({ id, data }) => {
       </CardHeader>
       <CardContent>
         <label>
-          <div className="flex justify-between ">
-            <span>Gain</span>
-            <span>{data.gain.toFixed(2)}</span>
+          <div className="flex justify-between items-center gap-6">
+            <span className="mb-1">gain</span>
+            <span className="text-muted-foreground">
+              {data.gain.toFixed(2)}
+            </span>
           </div>
 
           <Slider

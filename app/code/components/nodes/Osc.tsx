@@ -53,9 +53,11 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
       </CardHeader>
       <CardContent className="nodrag flex flex-col space-y-10">
         <label>
-          <div className="flex justify-between ">
-            <span>Frequency</span>
-            <span>{data.frequency} Hz</span>
+          <div className="flex justify-between space-x-6 items-center mb-1">
+            <p className="text-accent-foreground">frequency</p>
+            <p className="text-muted-foreground  text-xs">
+              {data.frequency} Hz
+            </p>
           </div>
 
           <Slider
@@ -67,7 +69,7 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
         </label>
 
         <label>
-          <span>Waveform</span>
+          <span className="mb-1">Waveform</span>
           <Select onValueChange={handleTypeChange} defaultValue={data.type}>
             <SelectTrigger className="">
               <SelectValue placeholder="Select a type" />

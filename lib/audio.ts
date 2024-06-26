@@ -37,7 +37,6 @@ export function createAudioNode(id: string, type: string, data: any) {
 
 export function updateAudioNode(id: string, data: any): void {
   const node = nodes.get(id);
-  console.log(node);
 
   if (!node) {
     console.error(`Node with id ${id} not found.`);
@@ -46,7 +45,6 @@ export function updateAudioNode(id: string, data: any): void {
 
   // 确保所有属性都更新
   for (const key in data) {
-    console.log(data);
     if (node[key] instanceof AudioParam) {
       (node[key] as AudioParam).value = data[key];
     } else {
