@@ -46,7 +46,6 @@ const Amp: React.FC<AmpProps> = ({ id, data }) => {
           />
         </label>
       </CardContent>
-      <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
     </Card>
   );
