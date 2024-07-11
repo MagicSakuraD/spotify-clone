@@ -23,3 +23,5 @@ export const toggleAudioAtom = atom(
     set(isRunningAtom, await checkIsRunning());
   }
 );
+
+export const colorModeAtom = atom<"light" | "dark" | "system">("system");

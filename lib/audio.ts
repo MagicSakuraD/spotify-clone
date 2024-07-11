@@ -5,7 +5,7 @@ const context = new AudioContext();
 context.suspend(); // 初始时挂起 AudioContext
 const nodes = new Map();
 
-export function createAudioNode(id: string, type: string, data: any) {
+export function createAudioNode(id: string, type: string, data?: any) {
   switch (type) {
     case "osc": {
       const node = context.createOscillator();
@@ -29,6 +29,12 @@ export function createAudioNode(id: string, type: string, data: any) {
       const node = context.createGain();
       node.gain.value = data.gain;
       node.connect(context.destination);
+      nodes.set(id, node);
+      break;
+    }
+    case " Analyser": {
+      const node = context.createAnalyser();
+      node.fftSize = 2048;
       nodes.set(id, node);
       break;
     }

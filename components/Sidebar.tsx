@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
-import { TbMusicCode } from "react-icons/tb";
+import { TbMusicCode, TbPiano } from "react-icons/tb";
 
 import { useMemo, useState } from "react";
 import Box from "@/components/Box";
@@ -44,6 +44,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
         label: "Code",
         active: pathname === "/code",
         href: "/code",
+      },
+      {
+        icon: TbPiano,
+        label: "Piano",
+        active: pathname === "/piano",
+        href: "/piano",
       },
     ],
     [pathname]

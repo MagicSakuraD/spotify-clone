@@ -11,9 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { colorModeAtom } from "@/lib/Atom";
+import { useSetAtom } from "jotai";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
+  const setColorMode = useSetAtom(colorModeAtom);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,13 +27,28 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("light");
+            setColorMode("light");
+          }}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("dark");
+            setColorMode("dark");
+          }}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("system");
+            setColorMode("system");
+          }}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

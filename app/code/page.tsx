@@ -6,7 +6,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import DragPanel from "./components/DragPanel";
-import { ReactFlowProvider } from "reactflow";
+import { ReactFlowProvider } from "@xyflow/react";
 import FlowPanel from "./components/FlowPanel";
 import Header from "@/components/Header";
 
@@ -23,8 +23,8 @@ const CodePage = () => {
           <ResizablePanel defaultSize={20}>
             <DragPanel />
           </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel defaultSize={80} className="">
+          <ResizableHandle className="h-10 border-2 my-auto rounded-lg" />
+          <ResizablePanel defaultSize={80} className="rounded-md">
             <FlowPanel />
           </ResizablePanel>
         </ResizablePanelGroup>

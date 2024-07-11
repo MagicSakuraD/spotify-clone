@@ -1,5 +1,5 @@
 import React, { memo, ReactNode, useState } from "react";
-import { Handle, NodeProps, Position } from "reactflow";
+import { Handle, NodeProps, Position } from "@xyflow/react";
 import {
   Card,
   CardContent,
@@ -83,7 +83,7 @@ const Osc: React.FC<OscComponentProps> = ({ id, data }) => {
           </Select>
         </label>
       </CardContent>
-      <Handle type="target" position={Position.Left} />
+
       <Handle type="source" position={Position.Right} />
     </Card>
   );

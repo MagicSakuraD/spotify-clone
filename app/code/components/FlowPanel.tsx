@@ -6,15 +6,18 @@ import React, {
   DragEvent,
   useMemo,
 } from "react";
-import ReactFlow, { Controls, ReactFlowInstance } from "reactflow";
-import "reactflow/dist/style.css";
 
+import { ReactFlow, ReactFlowInstance, Controls } from "@xyflow/react";
+
+import "@xyflow/react/dist/style.css";
 import Osc from "./nodes/Osc";
 
 import { atomWithImmer } from "jotai-immer";
 import { useStore } from "@/hooks/useStore";
 import Dac from "./nodes/Dac";
 import Amp from "./nodes/Amp";
+import { colorModeAtom } from "@/lib/Atom";
+import { useAtomValue } from "jotai";
 
 const nodeTypes = {
   osc: Osc,
@@ -23,6 +26,8 @@ const nodeTypes = {
 };
 
 const FlowPanel = () => {
+  const colorMode = useAtomValue(colorModeAtom);
+
   const {
     nodes,
     edges,
@@ -79,6 +84,7 @@ const FlowPanel = () => {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        colorMode={colorMode}
         fitView
       >
         <Controls />

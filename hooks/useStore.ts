@@ -1,11 +1,5 @@
 "use client";
-import {
-  applyNodeChanges,
-  applyEdgeChanges,
-  NodeChange,
-  EdgeChange,
-  Edge,
-} from "reactflow";
+
 import uniqid from "uniqid";
 import { useAtom } from "jotai";
 import { atomWithImmer } from "jotai-immer";
@@ -16,6 +10,16 @@ import {
   disconnect,
   createAudioNode,
 } from "@/lib/audio";
+import { useCallback } from "react";
+import {
+  OnNodesChange,
+  applyNodeChanges,
+  applyEdgeChanges,
+  NodeChange,
+  EdgeChange,
+  Edge,
+  NodeTypes,
+} from "@xyflow/react";
 
 // 声明 initialState 的类型
 type State = {
@@ -30,14 +34,14 @@ export interface NodeData {
   gain?: number;
 }
 
-type Node = {
+type Nodes = {
   id: string;
   type: string;
   data: NodeData;
   position: { x: number; y: number };
 };
 
-const initialNodes: Node[] = [];
+const initialNodes: Nodes[] = [];
 
 const initialState: State = {
   nodes: initialNodes,
@@ -77,13 +81,13 @@ export const useStore = () => {
     });
   };
 
-  const onNodesChange = (changes: NodeChange[]) => {
+  const onNodesChange: OnNodesChange = (changes) => {
     setFlowState((draft) => {
       draft.nodes = applyNodeChanges(changes, draft.nodes);
     });
   };
 
-  const removeNodes = (nodes: Node[]) => {
+  const removeNodes = (nodes: Nodes[]) => {
     for (const { id } of nodes) {
       removeAudioNode(id);
     }

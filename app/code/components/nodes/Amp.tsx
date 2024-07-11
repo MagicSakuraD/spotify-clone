@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Handle, Position } from "reactflow";
+import { Handle, Position } from "@xyflow/react";
 
 import React from "react";
 import { Slider } from "@/components/ui/slider";
@@ -46,6 +46,7 @@ const Amp: React.FC<AmpProps> = ({ id, data }) => {
           />
         </label>
       </CardContent>
+      <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
     </Card>
   );
