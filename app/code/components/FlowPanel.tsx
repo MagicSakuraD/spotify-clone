@@ -12,10 +12,10 @@ import { ReactFlow, ReactFlowInstance, Controls } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import Osc from "./nodes/Osc";
 
-import { atomWithImmer } from "jotai-immer";
 import { useStore } from "@/hooks/useStore";
 import Dac from "./nodes/Dac";
 import Amp from "./nodes/Amp";
+import Analyser from "./nodes/Analyser";
 import { colorModeAtom } from "@/lib/Atom";
 import { useAtomValue } from "jotai";
 
@@ -23,6 +23,7 @@ const nodeTypes = {
   osc: Osc,
   dac: Dac,
   amp: Amp,
+  analyser: Analyser,
 };
 
 const FlowPanel = () => {

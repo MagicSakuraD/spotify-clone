@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconType } from "react-icons";
 import { twMerge } from "tailwind-merge";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { isCollapsedAtom } from "@/lib/Atom";
 interface SidebarItemProps {
   icon: IconType;

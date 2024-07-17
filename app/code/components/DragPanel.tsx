@@ -8,7 +8,7 @@ const DragPanel = () => {
     event.dataTransfer.effectAllowed = "move";
   };
 
-  const nodeTypes = ["Osc", "Amp", "Dac"];
+  const nodeTypes = ["Osc", "Amp", "Dac", "Analyser"];
 
   return (
     <aside className="flex flex-col gap-3 m-3">

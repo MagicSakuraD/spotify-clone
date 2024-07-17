@@ -30,7 +30,7 @@ type State = {
 export interface NodeData {
   label?: string;
   frequency?: number;
-  type?: string;
+  type?: OscillatorType;
   gain?: number;
 }
 
@@ -55,7 +55,7 @@ export const useStore = () => {
 
   const createNode = (type: string) => {
     const id = uniqid("muinn_");
-    let data;
+    let data: NodeData;
     const position = { x: 0, y: 0 };
 
     switch (type) {
@@ -69,6 +69,10 @@ export const useStore = () => {
       }
       case "dac": {
         data = { gain: 0.3 };
+        break;
+      }
+      case "analyser": {
+        data = {};
         break;
       }
       default:

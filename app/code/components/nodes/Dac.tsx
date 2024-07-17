@@ -1,6 +1,6 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import { isRunningAtom, toggleAudioAtom } from "@/lib/Atom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

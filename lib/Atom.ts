@@ -25,3 +25,5 @@ export const toggleAudioAtom = atom(
 );
 
 export const colorModeAtom = atom<"light" | "dark" | "system">("system");
+
+export const audioDataAtom = atom(new Uint8Array(2048));
