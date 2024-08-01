@@ -12,13 +12,11 @@ function initializeContext() {
   }
 }
 
-class XYPad extends AudioNode {
+class XYPad {
   private oscNode: OscillatorNode;
   private gainNode: GainNode;
 
   constructor(frequency: number, gain: number) {
-    super();
-
     this.oscNode = context.createOscillator();
     this.gainNode = context.createGain();
 
@@ -27,7 +25,7 @@ class XYPad extends AudioNode {
 
     // Connect the nodes
     this.oscNode.connect(this.gainNode);
-    // this.gainNode.connect(context.destination);
+    this.oscNode.start();
   }
 
   setFrequency(value: number) {
@@ -38,8 +36,16 @@ class XYPad extends AudioNode {
     this.gainNode.gain.value = value;
   }
 
-  getNodes() {
-    return { oscNode: this.oscNode, gainNode: this.gainNode };
+  connect(destination: AudioNode) {
+    this.gainNode.connect(destination);
+  }
+
+  disconnect() {
+    this.gainNode.disconnect();
+  }
+
+  getOutputNode() {
+    return this.gainNode;
   }
 }
 
@@ -84,7 +90,7 @@ export function createAudioNode(id: string, type: string, data?: NodeData) {
       const frequency = data?.frequency ?? 440;
       const gain = data?.gain ?? 0.5;
       const xyPad = new XYPad(frequency, gain);
-      nodes.set(id, xyPad);
+      nodes.set(id, xyPad as any);
       break;
     }
   }
@@ -145,7 +151,11 @@ export function connect(sourceId: string, targetId: string) {
   }
 
   try {
-    source.connect(target);
+    if (source instanceof XYPad) {
+      source.connect(target instanceof XYPad ? target.getOutputNode() : target);
+    } else {
+      source.connect(target instanceof XYPad ? target.getOutputNode() : target);
+    }
     console.log(`Connected node ${sourceId} to node ${targetId}.`);
   } catch (error) {
     console.error(
@@ -160,7 +170,13 @@ export function disconnect(sourceId: string, targetId: string) {
   const target = nodes.get(targetId);
 
   if (source && target) {
-    source.disconnect(target);
+    if (source instanceof XYPad) {
+      source.disconnect();
+    } else {
+      source.disconnect(
+        target instanceof XYPad ? target.getOutputNode() : target
+      );
+    }
   }
 }
 

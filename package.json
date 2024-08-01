@@ -35,12 +35,14 @@
     "@types/react-dom": "18.2.7",
     "@types/uniqid": "^5.3.4",
     "@xyflow/react": "^12.0.0",
+    "animejs": "^3.2.2",
     "autoprefixer": "10.4.14",
     "boring-avatars": "^1.10.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint": "8.46.0",
     "eslint-config-next": "^14.2.3",
+    "framer-motion": "^11.3.19",
     "immer": "^10.1.1",
     "jotai": "^2.8.3",
     "jotai-immer": "^0.4.0",
@@ -69,6 +71,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.12",
     "@types/negotiator": "^0.6.3",
     "supabase": "^1.110.1"
   }

@@ -16,6 +16,7 @@ import { useStore } from "@/hooks/useStore";
 import Dac from "./nodes/Dac";
 import Amp from "./nodes/Amp";
 import Analyser from "./nodes/Analyser";
+import XYpad from "./nodes/XYpad";
 import { colorModeAtom } from "@/lib/Atom";
 import { useAtomValue } from "jotai";
 
@@ -24,6 +25,7 @@ const nodeTypes = {
   dac: Dac,
   amp: Amp,
   analyser: Analyser,
+  xypad: XYpad,
 };
 
 const FlowPanel = () => {

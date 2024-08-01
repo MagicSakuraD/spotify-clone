@@ -75,6 +75,10 @@ export const useStore = () => {
         data = {};
         break;
       }
+      case "xypad": {
+        data = { frequency: 440, gain: 0.5 };
+        break;
+      }
       default:
         throw new Error(`Unknown node type: ${type}`);
     }
@@ -82,12 +86,6 @@ export const useStore = () => {
     const newNode = { id, type, data, position };
     setFlowState((draft) => {
       draft.nodes.push(newNode);
-    });
-  };
-
-  const onNodesChange: OnNodesChange = (changes) => {
-    setFlowState((draft) => {
-      draft.nodes = applyNodeChanges(changes, draft.nodes);
     });
   };
 
@@ -119,6 +117,12 @@ export const useStore = () => {
   const onEdgesChange = (changes: EdgeChange[]) => {
     setFlowState((draft) => {
       draft.edges = applyEdgeChanges(changes, draft.edges);
+    });
+  };
+
+  const onNodesChange: OnNodesChange = (changes) => {
+    setFlowState((draft) => {
+      draft.nodes = applyNodeChanges(changes, draft.nodes);
     });
   };
 
