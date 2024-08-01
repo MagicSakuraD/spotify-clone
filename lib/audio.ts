@@ -12,6 +12,37 @@ function initializeContext() {
   }
 }
 
+class XYPad extends AudioNode {
+  private oscNode: OscillatorNode;
+  private gainNode: GainNode;
+
+  constructor(frequency: number, gain: number) {
+    super();
+
+    this.oscNode = context.createOscillator();
+    this.gainNode = context.createGain();
+
+    this.oscNode.frequency.value = frequency;
+    this.gainNode.gain.value = gain;
+
+    // Connect the nodes
+    this.oscNode.connect(this.gainNode);
+    // this.gainNode.connect(context.destination);
+  }
+
+  setFrequency(value: number) {
+    this.oscNode.frequency.value = value;
+  }
+
+  setGain(value: number) {
+    this.gainNode.gain.value = value;
+  }
+
+  getNodes() {
+    return { oscNode: this.oscNode, gainNode: this.gainNode };
+  }
+}
+
 export function createAudioNode(id: string, type: string, data?: NodeData) {
   initializeContext();
   if (!context) return;
@@ -48,6 +79,14 @@ export function createAudioNode(id: string, type: string, data?: NodeData) {
       nodes.set(id, analyserNode);
       break;
     }
+
+    case "xypad": {
+      const frequency = data?.frequency ?? 440;
+      const gain = data?.gain ?? 0.5;
+      const xyPad = new XYPad(frequency, gain);
+      nodes.set(id, xyPad);
+      break;
+    }
   }
 }
 
@@ -59,12 +98,21 @@ export function updateAudioNode(id: string, data: any): void {
     return;
   }
 
-  // 确保所有属性都更新
-  for (const key in data) {
-    if ((node as any)[key] instanceof AudioParam) {
-      ((node as any)[key] as AudioParam).value = data[key];
-    } else {
-      (node as any)[key] = data[key];
+  if (node instanceof XYPad) {
+    if (data.frequency !== undefined) {
+      node.setFrequency(data.frequency);
+    }
+    if (data.gain !== undefined) {
+      node.setGain(data.gain);
+    }
+  } else {
+    // Ensure all properties are updated
+    for (const key in data) {
+      if ((node as any)[key] instanceof AudioParam) {
+        ((node as any)[key] as AudioParam).value = data[key];
+      } else {
+        (node as any)[key] = data[key];
+      }
     }
   }
 }
