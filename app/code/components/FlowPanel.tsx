@@ -17,6 +17,7 @@ import Dac from "./nodes/Dac";
 import Amp from "./nodes/Amp";
 import Analyser from "./nodes/Analyser";
 import XYpad from "./nodes/XYpad";
+import AudioFile from "./nodes/AudioFile";
 import { colorModeAtom } from "@/lib/Atom";
 import { useAtomValue } from "jotai";
 
@@ -26,6 +27,7 @@ const nodeTypes = {
   amp: Amp,
   analyser: Analyser,
   xypad: XYpad,
+  audiofile: AudioFile,
 };
 
 const FlowPanel = () => {

@@ -32,6 +32,9 @@ export interface NodeData {
   frequency?: number;
   type?: OscillatorType;
   gain?: number;
+  file?: File;
+  loop?: boolean; // Add the loop property here
+  autoplay?: boolean;
 }
 
 type Nodes = {
@@ -77,6 +80,14 @@ export const useStore = () => {
       }
       case "xypad": {
         data = { frequency: 440, gain: 0.5 };
+        break;
+      }
+      case "audiofile": {
+        data = {
+          file: undefined, // You may want to handle file selection separately
+          loop: true, // Default loop value, can be changed by user
+          autoplay: true, // Default autoplay value, can be changed by user
+        };
         break;
       }
       default:

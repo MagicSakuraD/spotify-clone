@@ -49,6 +49,54 @@ class XYPad {
   }
 }
 
+// 将文件加载逻辑抽取为一个单独的函数
+function loadAudioFile(
+  node: AudioBufferSourceNode,
+  file: File,
+  loop: boolean = true,
+  autoplay: boolean = true
+) {
+  const reader = new FileReader();
+
+  reader.onload = function () {
+    const arrayBuffer = reader.result as ArrayBuffer;
+
+    context.decodeAudioData(
+      arrayBuffer,
+      (audioBuffer) => {
+        node.buffer = audioBuffer;
+        node.loop = loop;
+
+        console.log(
+          `Audio file "${
+            file.name
+          }" loaded successfully. Duration: ${audioBuffer.duration.toFixed(
+            2
+          )} seconds.`
+        );
+
+        if (autoplay) {
+          console.log(`next execute node.start()`);
+          node.start();
+          console.log(`Audio file "${file.name}" started playing (autoplay).`);
+        }
+      },
+      (error) => {
+        console.error(
+          `Error decoding audio data for file "${file.name}":`,
+          error
+        );
+      }
+    );
+  };
+
+  reader.onerror = function () {
+    console.error(`Error reading audio file "${file.name}"`);
+  };
+
+  reader.readAsArrayBuffer(file);
+}
+
 export function createAudioNode(id: string, type: string, data?: NodeData) {
   initializeContext();
   if (!context) return;
@@ -93,6 +141,17 @@ export function createAudioNode(id: string, type: string, data?: NodeData) {
       nodes.set(id, xyPad as any);
       break;
     }
+
+    case "audiofile": {
+      const node = context.createBufferSource();
+      nodes.set(id, node); // 设置节点，即使没有文件
+
+      if (data?.file) {
+        loadAudioFile(node, data.file, data?.loop, data?.autoplay);
+      }
+      // 如果没有文件，我们仍然创建节点，但不加载任何音频数据
+      break;
+    }
   }
 }
 
@@ -102,6 +161,14 @@ export function updateAudioNode(id: string, data: any): void {
   if (!node) {
     console.error(`Node with id ${id} not found.`);
     return;
+  }
+
+  if (node instanceof AudioBufferSourceNode) {
+    console.log("Updating audio file node", data);
+    if (data.file) {
+      // 如果节点已经在播放，我们需要停止它并创建一个新的节点
+      loadAudioFile(node, data.file, data.loop, data.autoplay);
+    }
   }
 
   if (node instanceof XYPad) {
@@ -151,12 +218,26 @@ export function connect(sourceId: string, targetId: string) {
   }
 
   try {
+    let sourceNode: AudioNode;
+
+    // Determine the correct source node
     if (source instanceof XYPad) {
-      source.connect(target instanceof XYPad ? target.getOutputNode() : target);
+      sourceNode = source.getOutputNode();
+    } else if (source instanceof AudioNode) {
+      sourceNode = source;
     } else {
-      source.connect(target instanceof XYPad ? target.getOutputNode() : target);
+      console.error(`Source node ${sourceId} is not a valid audio node.`);
+      return;
     }
-    console.log(`Connected node ${sourceId} to node ${targetId}.`);
+
+    // Connect the source node to the target
+    // We don't need to check if the target is XYPad because XYPad is only a source
+    if (target instanceof AudioNode) {
+      sourceNode.connect(target);
+      console.log(`Connected node ${sourceId} to node ${targetId}.`);
+    } else {
+      console.error(`Target node ${targetId} is not a valid audio node.`);
+    }
   } catch (error) {
     console.error(
       `Failed to connect node ${sourceId} to node ${targetId}:`,
