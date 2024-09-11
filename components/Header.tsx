@@ -9,11 +9,18 @@ import Btn from "./Btn";
 import useAuthModal from "@/hooks/useAuthModal";
 import { supabase } from "@/utils/supabase/client";
 import { useUser } from "@/hooks/useUser";
-import { Button } from "./ui/button";
-import { FaUserAlt } from "react-icons/fa";
 import { useToast } from "@/components/ui/use-toast";
 import usePlayer from "@/hooks/usePlayer";
 import Avatar from "boring-avatars";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ThemeToggle } from "@/components/ModeToggle";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -72,23 +79,41 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         <div className="flex justify-between items-center gpa-x-4">
           {user ? (
             <div className="flex gap-x-4 items-center">
-              <Btn onClick={handleLogout} className="bg-white px-6 py-2">
+              {/* <Btn onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
-              </Btn>
-              <button onClick={() => router.push("/account")}>
-                <Avatar
-                  size={42}
-                  name={user.email}
-                  variant="beam"
-                  colors={[
-                    "#92A1C6",
-                    "#146A7C",
-                    "#6366f1",
-                    "#C271B4",
-                    "#f43f5e",
-                  ]}
-                />
-              </button>
+              </Btn> */}
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <button>
+                    <Avatar
+                      size={42}
+                      name={user.email}
+                      variant="beam"
+                      colors={[
+                        "#92A1C6",
+                        "#146A7C",
+                        "#6366f1",
+                        "#C271B4",
+                        "#f43f5e",
+                      ]}
+                    />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => router.push("/account")}>
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <ThemeToggle />
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={handleLogout}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ) : (
             <>

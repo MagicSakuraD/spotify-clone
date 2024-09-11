@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { colorModeAtom } from "@/lib/Atom";
 import { useSetAtom } from "jotai";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
@@ -53,5 +54,47 @@ export function ModeToggle() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export function ThemeToggle() {
+  const { setTheme } = useTheme();
+  const setColorMode = useSetAtom(colorModeAtom);
+  return (
+    <div>
+      <p className="mt-2">Theme</p>
+      <ToggleGroup type="single" defaultValue="s" variant="outline">
+        <ToggleGroupItem
+          value="light"
+          onClick={() => {
+            setTheme("light");
+            setColorMode("light");
+          }}
+          className="hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 text-sm"
+        >
+          light
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          className="hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 text-sm"
+          value="dark"
+          onClick={() => {
+            setTheme("dark");
+            setColorMode("dark");
+          }}
+        >
+          dark
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          className="hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 text-sm"
+          value="system"
+          onClick={() => {
+            setTheme("system");
+            setColorMode("system");
+          }}
+        >
+          system
+        </ToggleGroupItem>
+      </ToggleGroup>
+    </div>
   );
 }
