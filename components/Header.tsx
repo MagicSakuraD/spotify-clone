@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ModeToggle";
+import { PiGearSixDuotone, PiArrowCircleRightDuotone } from "react-icons/pi";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -103,6 +104,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                   <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => router.push("/account")}>
+                    <PiGearSixDuotone className="mr-1" size={20} />
                     Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem>
@@ -110,6 +112,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={handleLogout}>
+                    <PiArrowCircleRightDuotone className="mr-1" size={20} />
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>

@@ -14,6 +14,7 @@ import {
 import { colorModeAtom } from "@/lib/Atom";
 import { useSetAtom } from "jotai";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { PiPaletteDuotone } from "react-icons/pi";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
@@ -62,7 +63,10 @@ export function ThemeToggle() {
   const setColorMode = useSetAtom(colorModeAtom);
   return (
     <div>
-      <p className="mt-2">Theme</p>
+      <div className="my-2 inline-flex items-center">
+        <PiPaletteDuotone size={20} />
+        Theme
+      </div>
       <ToggleGroup type="single" defaultValue="s" variant="outline">
         <ToggleGroupItem
           value="light"
