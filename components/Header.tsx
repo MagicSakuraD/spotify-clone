@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                 Logout
               </Btn> */}
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger className="focus:outline-none">
                   <button>
                     <Avatar
                       size={42}

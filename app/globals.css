@@ -93,3 +93,17 @@
 .react-flow__panel.react-flow__attribution.bottom.right {
   background-color: var(--bg-color);
 } */
+
+.piano-container {
+  font-size: min(1.5vw, 16px);
+}
+
+.white-key {
+  @apply w-[6.67%] h-full rounded-md cursor-pointer bg-white text-black shadow-lg transform transition-transform duration-100 active:translate-y-1 active:shadow-inner;
+  font-size: 0.8em;
+}
+
+.black-key {
+  @apply w-[3.8%] h-full rounded-md cursor-pointer bg-black text-white shadow-lg transform transition-transform duration-100 active:translate-y-1 active:shadow-inner absolute;
+  font-size: 0.7em;
+}
