@@ -3,26 +3,37 @@ import React, { useEffect, useState } from "react";
 import * as Tone from "tone";
 import Header from "@/components/Header";
 
+// 添加八度信息的白键音符
 const whiteKeys = [
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "A",
-  "B",
-  "C",
+  "C4",
+  "D4",
+  "E4",
+  "F4",
+  "G4",
+  "A4",
+  "B4",
+  "C5",
+  "D5",
+  "E5",
+  "F5",
+  "G5",
+  "A5",
+  "B5",
 ];
 
-const blackKeys = ["C#", "D#", "F#", "G#", "A#", "C#", "D#", "F#", "G#", "A#"];
-
+// 添加八度信息的黑键音符
+const blackKeys = [
+  "C#4",
+  "D#4",
+  "F#4",
+  "G#4",
+  "A#4",
+  "C#5",
+  "D#5",
+  "F#5",
+  "G#5",
+  "A#5",
+];
 const PianoPage = () => {
   const [synth, setSynth] = useState<Tone.Synth | null>(null);
 
@@ -45,18 +56,18 @@ const PianoPage = () => {
   // 播放音符的函数
   const playNote = (note: string) => {
     if (synth) {
-      synth.triggerAttackRelease(note + "4", "8n");
+      synth.triggerAttackRelease(note, "8n");
     }
   };
   return (
     <main className="rounded-lg h-full w-full overflow-hidden overflow-y-auto">
-      {/* <Header className="from-bg-neutral-900">
+      <Header className="from-bg-neutral-900">
         <div className="mb-2 flex flex-col gap-y-6">
-          <h1 className="text-3xl font-semibold">placeholder</h1>
+          <h1 className="text-3xl font-semibold">piano</h1>
         </div>
-      </Header> */}
-      <div className="flex justify-center items-center relative mt-10">
-        <div className="piano-container w-full max-w-5xl aspect-[3/1] relative">
+      </Header>
+      <div className="flex justify-center items-center relative mx-auto my-auto">
+        <div className="piano-container w-full max-w-5xl aspect-[3/1] relative font-semibold">
           {/* white keys */}
           <div className="flex h-full gap-1">
             {whiteKeys.map((note, index) => (
@@ -70,22 +81,22 @@ const PianoPage = () => {
             ))}
           </div>
           {/* black keys */}
-          <div className="absolute top-0 left-0 flex h-3/5 w-full">
+          <div className="absolute top-0 left-0 flex h-3/5 w-full font-semibold text-sm">
             {blackKeys.map((note, index) => {
               const positions = [
-                4.46, // C#
-                11.13, // D#
-                24.46, // F#
-                31.13, // G#
-                37.8, // A#
-                51.13, // C# (second octave)
-                57.8, // D# (second octave)
-                71.13, // F# (second octave)
-                77.8, // G# (second octave)
-                84.46, // A# (second octave)
+                4.99, // C#
+                11.96, // D#
+                26.09, // F#
+                33.53, // G#
+                40.59, // A#
+                54.73, // C# (second octave)
+                61.85, // D# (second octave)
+                76.13, // F# (second octave)
+                83.21, // G# (second octave)
+                90.46, // A# (second octave)
               ];
-              const leftPosition = positions[index] || 0;
 
+              const leftPosition = positions[index] || 0;
               return (
                 <button
                   key={note + index}
