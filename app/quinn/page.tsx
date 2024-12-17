@@ -30,10 +30,12 @@ const page = () => {
     <div className="container mx-auto mt-32 text-center">
       <p className="font-semibold text-xl">
         {/* Apply blue color to the first element */}
-        <span className="text-blue-500">{newArray[0]}</span>{" "}
+        <span className="text-blue-500 underline decoration-pink-500">
+          {newArray[0]}
+        </span>{" "}
         {/* Apply red color to the rest */}
         {newArray.slice(1).map((value, index) => (
-          <span key={index} className="text-red-500 ml-2">
+          <span key={index} className="text-red-500 ml-2 rounded bg-muted ">
             {value}
           </span>
         ))}
