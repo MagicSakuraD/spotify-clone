@@ -1,51 +1,48 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 import Header from "@/components/Header";
 
-// 添加八度信息的白键音符
+// Define white and black keys with their corresponding keyboard keys
 const whiteKeys = [
-  "C4",
-  "D4",
-  "E4",
-  "F4",
-  "G4",
-  "A4",
-  "B4",
-  "C5",
-  "D5",
-  "E5",
-  "F5",
-  "G5",
-  "A5",
-  "B5",
+  { note: "C4", key: "z" },
+  { note: "D4", key: "x" },
+  { note: "E4", key: "c" },
+  { note: "F4", key: "v" },
+  { note: "G4", key: "b" },
+  { note: "A4", key: "n" },
+  { note: "B4", key: "m" },
+  { note: "C5", key: "," },
+  { note: "D5", key: "." },
+  { note: "E5", key: "/" },
+  { note: "F5", key: "q" },
+  { note: "G5", key: "w" },
+  { note: "A5", key: "e" },
+  { note: "B5", key: "r" },
 ];
 
-// 添加八度信息的黑键音符
 const blackKeys = [
-  "C#4",
-  "D#4",
-  "F#4",
-  "G#4",
-  "A#4",
-  "C#5",
-  "D#5",
-  "F#5",
-  "G#5",
-  "A#5",
+  { note: "C#4", key: "s" },
+  { note: "D#4", key: "d" },
+  { note: "F#4", key: "g" },
+  { note: "G#4", key: "h" },
+  { note: "A#4", key: "j" },
+  { note: "C#5", key: "t" },
+  { note: "D#5", key: "y" },
+  { note: "F#5", key: "u" },
+  { note: "G#5", key: "i" },
+  { note: "A#5", key: "o" },
 ];
+
 const PianoPage = () => {
   const [synth, setSynth] = useState<Tone.Synth | null>(null);
+  const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    // 创建合成器
     const newSynth = new Tone.Synth().toDestination();
     setSynth(newSynth);
-
-    // 启动 Tone.js
     Tone.start();
 
-    // 清理函数
     return () => {
       if (newSynth) {
         newSynth.dispose();
@@ -53,56 +50,133 @@ const PianoPage = () => {
     };
   }, []);
 
-  // 播放音符的函数
-  const playNote = (note: string) => {
-    if (synth) {
-      synth.triggerAttackRelease(note, "8n");
+  const playNote = useCallback(
+    (note: string) => {
+      if (synth) {
+        synth.triggerAttackRelease(note, "8n");
+      }
+    },
+    [synth]
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const key = event.key.toLowerCase();
+      const whiteKey = whiteKeys.find((k) => k.key === key);
+      const blackKey = blackKeys.find((k) => k.key === key);
+
+      if (whiteKey) {
+        playNote(whiteKey.note);
+        setActiveKeys((prev) => new Set(prev).add(whiteKey.note));
+      } else if (blackKey) {
+        playNote(blackKey.note);
+        setActiveKeys((prev) => new Set(prev).add(blackKey.note));
+      }
+    },
+    [playNote]
+  );
+
+  const handleKeyUp = useCallback((event: KeyboardEvent) => {
+    const key = event.key.toLowerCase();
+    const whiteKey = whiteKeys.find((k) => k.key === key);
+    const blackKey = blackKeys.find((k) => k.key === key);
+
+    if (whiteKey) {
+      setActiveKeys((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(whiteKey.note);
+        return newSet;
+      });
+    } else if (blackKey) {
+      setActiveKeys((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(blackKey.note);
+        return newSet;
+      });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [handleKeyDown, handleKeyUp]);
+
   return (
     <main className="rounded-lg h-full w-full overflow-hidden overflow-y-auto">
       <Header className="from-bg-neutral-900">
         <div className="mb-2 flex flex-col gap-y-6">
-          <h1 className="text-3xl font-semibold">piano</h1>
+          <h1 className="text-3xl font-semibold">Piano</h1>
         </div>
       </Header>
       <div className="flex justify-center items-center relative mx-auto my-auto">
         <div className="piano-container w-full max-w-5xl aspect-[3/1] relative font-semibold">
-          {/* white keys */}
+          {/* White keys */}
           <div className="flex h-full gap-1">
-            {whiteKeys.map((note, index) => (
+            {whiteKeys.map(({ note, key }, index) => (
               <button
                 key={note + index}
-                className="white-key"
+                className={`white-key ${activeKeys.has(note) ? "active" : ""}`}
                 onClick={() => playNote(note)}
+                onMouseDown={() =>
+                  setActiveKeys((prev) => new Set(prev).add(note))
+                }
+                onMouseUp={() =>
+                  setActiveKeys((prev) => {
+                    const newSet = new Set(prev);
+                    newSet.delete(note);
+                    return newSet;
+                  })
+                }
+                onMouseLeave={() =>
+                  setActiveKeys((prev) => {
+                    const newSet = new Set(prev);
+                    newSet.delete(note);
+                    return newSet;
+                  })
+                }
               >
                 {note}
               </button>
             ))}
           </div>
-          {/* black keys */}
+          {/* Black keys */}
           <div className="absolute top-0 left-0 flex h-3/5 w-full font-semibold text-sm">
-            {blackKeys.map((note, index) => {
+            {blackKeys.map(({ note }, index) => {
               const positions = [
-                4.99, // C#
-                11.96, // D#
-                26.09, // F#
-                33.53, // G#
-                40.59, // A#
-                54.73, // C# (second octave)
-                61.85, // D# (second octave)
-                76.13, // F# (second octave)
-                83.21, // G# (second octave)
-                90.46, // A# (second octave)
+                4.99, 11.96, 26.09, 33.53, 40.59, 54.73, 61.85, 76.13, 83.21,
+                90.46,
               ];
 
               const leftPosition = positions[index] || 0;
               return (
                 <button
                   key={note + index}
-                  className="black-key"
+                  className={`black-key ${
+                    activeKeys.has(note) ? "active" : ""
+                  }`}
                   style={{ left: `${leftPosition}%` }}
                   onClick={() => playNote(note)}
+                  onMouseDown={() =>
+                    setActiveKeys((prev) => new Set(prev).add(note))
+                  }
+                  onMouseUp={() =>
+                    setActiveKeys((prev) => {
+                      const newSet = new Set(prev);
+                      newSet.delete(note);
+                      return newSet;
+                    })
+                  }
+                  onMouseLeave={() =>
+                    setActiveKeys((prev) => {
+                      const newSet = new Set(prev);
+                      newSet.delete(note);
+                      return newSet;
+                    })
+                  }
                 >
                   {note}
                 </button>

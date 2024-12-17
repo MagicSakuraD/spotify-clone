@@ -95,9 +95,17 @@
 } */
 
 .white-key {
-  @apply w-[6.67%] h-full rounded-md cursor-pointer bg-white text-black shadow-lg transform transition-transform duration-100 active:translate-y-1 active:shadow-inner relative;
+  @apply w-[6.67%] h-full rounded-md cursor-pointer bg-white text-black shadow-lg transform transition-transform duration-100 relative;
+}
+
+.white-key.active {
+  @apply translate-y-1 shadow-inner bg-gray-200;
 }
 
 .black-key {
-  @apply w-[3.8%] h-full rounded-md cursor-pointer bg-black text-white shadow-lg transform transition-transform duration-100 active:translate-y-1 active:shadow-inner absolute top-0;
+  @apply w-[3.8%] h-full rounded-md cursor-pointer bg-black text-white shadow-lg transform transition-transform duration-100 absolute top-0;
+}
+
+.black-key.active {
+  @apply translate-y-1 shadow-inner bg-gray-800;
 }
